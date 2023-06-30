@@ -1,10 +1,10 @@
 import Foundation
 
 // MARK: - Municipality
-public class Municipality: Codable {
+public class Municipality: Codable, Identifiable {
     let municipalityID: String
     let value: Value
-    let id: String
+    public let id: String
 
     enum CodingKeys: String, CodingKey {
         case municipalityID = "id"

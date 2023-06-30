@@ -3,9 +3,9 @@ import Foundation
 public typealias Routes = [Route]
 
 // MARK: - Route
-public class Route: Codable {
+public class Route: Codable, Identifiable {
 
-    let id, routeID: String
+    public let id, routeID: String
     let v: Int
     let createdAt: String
     let municipalities: [Municipality]

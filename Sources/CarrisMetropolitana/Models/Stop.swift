@@ -6,8 +6,8 @@ public typealias Stops = [Stop]
 
 // MARK: - Stop
 
-public class Stop: Codable {
-    let id, stopID: String
+public class Stop: Codable, Identifiable {
+    public let id, stopID: String
     let v: Int
     let createdAt: String
     let routes: [Route]
