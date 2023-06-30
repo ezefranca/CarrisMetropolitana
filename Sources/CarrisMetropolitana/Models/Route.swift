@@ -6,13 +6,13 @@ public typealias Routes = [Route]
 public class Route: Codable, Identifiable {
 
     public let id, routeID: String
-    let v: Int
-    let createdAt: String
-    let municipalities: [Municipality]
-    let routeColor: RouteColor
-    let routeLongName, routeShortName: String
-    let routeTextColor: RouteTextColor
-    let updatedAt: String
+    public let v: Int
+    public let createdAt: String
+    public let municipalities: [Municipality]
+    public let routeColor: RouteColor
+    public let routeLongName, routeShortName: String
+    public let routeTextColor: RouteTextColor
+    public let updatedAt: String
 
     enum CodingKeys: String, CodingKey {
         case id = "_id"

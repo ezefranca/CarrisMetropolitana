@@ -8,10 +8,10 @@ public typealias Stops = [Stop]
 
 public class Stop: Codable, Identifiable {
     public let id, stopID: String
-    let v: Int
-    let createdAt: String
-    let routes: [Route]
-    let stopLat, stopLon, stopName, updatedAt: String
+    public let v: Int
+    public let createdAt: String
+    public let routes: [Route]
+    public let stopLat, stopLon, stopName, updatedAt: String
 
     enum CodingKeys: String, CodingKey {
         case id = "_id"
