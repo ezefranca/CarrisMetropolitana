@@ -1,14 +1,30 @@
 import Foundation
 
+// MARK: - CarrisMetropolitanaServiceProtocol
+
+public protocol CarrisMetropolitanaServiceProtocol {
+    func getAllRoutesSummary() async throws -> Routes
+    func getRouteByID(routeID: String) async throws -> Route
+    func getRoutesByShortName(routeShortName: String) async throws -> Routes
+    func getAllStops() async throws -> Stops
+    func getStopByID(stopID: String) async throws -> Stop
+}
+
+
 // MARK: - CarrisMetropolitanaService
 
-class CarrisMetropolitanaService {
+public class CarrisMetropolitanaService : CarrisMetropolitanaServiceProtocol {
+
     private let urlSession: URLSession
 
-    init() {
+    init(urlSession: URLSession = CarrisMetropolitanaService.defaultUrlSession()) {
+        self.urlSession = urlSession
+    }
+
+    private static func defaultUrlSession() -> URLSession {
         let configuration = URLSessionConfiguration.default
         configuration.urlCache = URLCache(memoryCapacity: 20 * 1024 * 1024, diskCapacity: 100 * 1024 * 1024, diskPath: "SchedulesAPI")
-        urlSession = URLSession(configuration: configuration)
+        return URLSession(configuration: configuration)
     }
 
     /// Fetches data from the specified URL and decodes it into the specified type.
@@ -55,7 +71,7 @@ extension CarrisMetropolitanaService {
 extension CarrisMetropolitanaService {
     /// Retrieves a summary of all routes.
     /// - Returns: A `Routes` object representing the summary of all routes.
-    func getAllRoutesSummary() async throws -> Routes {
+    public func getAllRoutesSummary() async throws -> Routes {
         let url = CarrisMetropolitanaRoutes.allRoutesSummary.url
         return try await fetchData(from: url)
     }
@@ -64,7 +80,7 @@ extension CarrisMetropolitanaService {
     /// - Parameters:
     ///   - routeID: The ID of the route to retrieve.
     /// - Returns: A `Route` object representing the route with the specified ID.
-    func getRouteByID(routeID: String) async throws -> Route {
+    public func getRouteByID(routeID: String) async throws -> Route {
         let url = CarrisMetropolitanaRoutes.routeByID(routeID).url
         return try await fetchData(from: url)
     }
@@ -73,14 +89,14 @@ extension CarrisMetropolitanaService {
     /// - Parameters:
     ///   - routeShortName: The short name of the routes to retrieve.
     /// - Returns: A `Routes` object representing the routes with the specified short name.
-    func getRoutesByShortName(routeShortName: String) async throws -> Routes {
+    public func getRoutesByShortName(routeShortName: String) async throws -> Routes {
         let url = CarrisMetropolitanaRoutes.routesByShortName(routeShortName).url
         return try await fetchData(from: url)
     }
 
     /// Retrieves all stops.
     /// - Returns: A `Stops` object representing all stops.
-    func getAllStops() async throws -> Stops {
+    public func getAllStops() async throws -> Stops {
         let url = CarrisMetropolitanaRoutes.allStops.url
         return try await fetchData(from: url)
     }
@@ -89,9 +105,8 @@ extension CarrisMetropolitanaService {
     /// - Parameters:
     ///   - stopID: The ID of the stop to retrieve.
     /// - Returns: A `Stop` object representing the stop with the specified ID.
-    func getStopByID(stopID: String) async throws -> Stop {
+    public func getStopByID(stopID: String) async throws -> Stop {
         let url = CarrisMetropolitanaRoutes.stopByID(stopID).url
         return try await fetchData(from: url)
     }
 }
-

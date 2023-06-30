@@ -2,11 +2,11 @@ import Foundation
 
 // MARK: - Stops
 
-typealias Stops = [Stop]
+public typealias Stops = [Stop]
 
 // MARK: - Stop
 
-class Stop: Codable {
+public class Stop: Codable {
     let id, stopID: String
     let v: Int
     let createdAt: String
@@ -24,7 +24,7 @@ class Stop: Codable {
         case updatedAt
     }
 
-    init(id: String, stopID: String, v: Int, createdAt: String, routes: [Route], stopLat: String, stopLon: String, stopName: String, updatedAt: String) {
+    public init(id: String, stopID: String, v: Int, createdAt: String, routes: [Route], stopLat: String, stopLon: String, stopName: String, updatedAt: String) {
         self.id = id
         self.stopID = stopID
         self.v = v

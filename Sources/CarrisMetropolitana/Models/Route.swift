@@ -1,9 +1,9 @@
 import Foundation
 
-typealias Routes = [Route]
+public typealias Routes = [Route]
 
 // MARK: - Route
-class Route: Codable {
+public class Route: Codable {
 
     let id, routeID: String
     let v: Int
@@ -26,7 +26,7 @@ class Route: Codable {
         case updatedAt
     }
 
-    enum RouteColor: String, Codable {
+    public enum RouteColor: String, Codable {
         case bb3E96 = "#BB3E96"
         case ed1944 = "#ED1944"
         case f4Ac1C = "#F4AC1C"
@@ -35,11 +35,11 @@ class Route: Codable {
         case the3D85C6 = "#3D85C6"
     }
 
-    enum RouteTextColor: String, Codable {
+    public enum RouteTextColor: String, Codable {
         case ffffff = "#FFFFFF"
     }
 
-    init(id: String, routeID: String, v: Int, createdAt: String, municipalities: [Municipality], routeColor: RouteColor, routeLongName: String, routeShortName: String, routeTextColor: RouteTextColor, updatedAt: String) {
+    public init(id: String, routeID: String, v: Int, createdAt: String, municipalities: [Municipality], routeColor: RouteColor, routeLongName: String, routeShortName: String, routeTextColor: RouteTextColor, updatedAt: String) {
         self.id = id
         self.routeID = routeID
         self.v = v

@@ -1,7 +1,7 @@
 import Foundation
 
 // MARK: - Municipality
-class Municipality: Codable {
+public class Municipality: Codable {
     let municipalityID: String
     let value: Value
     let id: String
@@ -12,13 +12,13 @@ class Municipality: Codable {
         case id = "_id"
     }
 
-    init(municipalityID: String, value: Value, id: String) {
+    public init(municipalityID: String, value: Value, id: String) {
         self.municipalityID = municipalityID
         self.value = value
         self.id = id
     }
 
-    enum Value: String, Codable {
+    public enum Value: String, Codable {
         case alcochete = "Alcochete"
         case almada = "Almada"
         case amadora = "Amadora"
