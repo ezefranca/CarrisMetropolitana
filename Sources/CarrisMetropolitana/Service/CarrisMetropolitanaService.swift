@@ -17,11 +17,11 @@ public class CarrisMetropolitanaService : CarrisMetropolitanaServiceProtocol {
 
     private let urlSession: URLSession
 
-    init(urlSession: URLSession = CarrisMetropolitanaService.defaultUrlSession()) {
+    public init(urlSession: URLSession = CarrisMetropolitanaService.defaultUrlSession()) {
         self.urlSession = urlSession
     }
 
-    private static func defaultUrlSession() -> URLSession {
+    public static func defaultUrlSession() -> URLSession {
         let configuration = URLSessionConfiguration.default
         configuration.urlCache = URLCache(memoryCapacity: 20 * 1024 * 1024, diskCapacity: 100 * 1024 * 1024, diskPath: "SchedulesAPI")
         return URLSession(configuration: configuration)
