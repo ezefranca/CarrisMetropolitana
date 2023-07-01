@@ -2,8 +2,8 @@ import Foundation
 
 // MARK: - Municipality
 public class Municipality: Codable, Identifiable {
-    let municipalityID: String
-    let value: Value
+    public let municipalityID: String
+    public let value: Value
     public let id: String
 
     enum CodingKeys: String, CodingKey {
