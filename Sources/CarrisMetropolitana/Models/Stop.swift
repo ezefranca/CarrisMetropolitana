@@ -6,7 +6,7 @@ public typealias Stops = [Stop]
 
 // MARK: - Stop
 
-public class Stop: Codable, Identifiable {
+public struct Stop: Codable, Identifiable {
     public let id, stopID: String
     public let v: Int
     public let createdAt: String
@@ -22,17 +22,5 @@ public class Stop: Codable, Identifiable {
         case stopLon = "stop_lon"
         case stopName = "stop_name"
         case updatedAt
-    }
-
-    public init(id: String, stopID: String, v: Int, createdAt: String, routes: [Route], stopLat: String, stopLon: String, stopName: String, updatedAt: String) {
-        self.id = id
-        self.stopID = stopID
-        self.v = v
-        self.createdAt = createdAt
-        self.routes = routes
-        self.stopLat = stopLat
-        self.stopLon = stopLon
-        self.stopName = stopName
-        self.updatedAt = updatedAt
     }
 }
