@@ -10,21 +10,34 @@ public protocol CarrisMetropolitanaServiceProtocol {
     func getStopByID(stopID: String) async throws -> Stop
 }
 
+// MARK: - CarrisMetropolitanaDecodable
+public protocol CarrisMetropolitanaDecodable {
+    func decode<T>(_ type: T.Type, from data: Data) throws -> T where T : Decodable
+}
+
+extension JSONDecoder: CarrisMetropolitanaDecodable {}
+
+// MARK: - CarrisMetropolitanaServiceConfig
+public struct CarrisMetropolitanaServiceConfig {
+    let urlSession: URLSession?
+    let jsonDecoder: CarrisMetropolitanaDecodable?
+
+    public init(urlSession: URLSession? = nil, jsonDecoder: CarrisMetropolitanaDecodable? = nil) {
+        self.urlSession = urlSession
+        self.jsonDecoder = jsonDecoder
+    }
+}
 
 // MARK: - CarrisMetropolitanaService
 
 public class CarrisMetropolitanaService : CarrisMetropolitanaServiceProtocol {
 
     private let urlSession: URLSession
+    private let jsonDecoder: CarrisMetropolitanaDecodable
 
-    public init(urlSession: URLSession = CarrisMetropolitanaService.defaultUrlSession()) {
-        self.urlSession = urlSession
-    }
-
-    public static func defaultUrlSession() -> URLSession {
-        let configuration = URLSessionConfiguration.default
-        configuration.urlCache = URLCache(memoryCapacity: 20 * 1024 * 1024, diskCapacity: 100 * 1024 * 1024, diskPath: "SchedulesAPI")
-        return URLSession(configuration: configuration)
+    public init(config: CarrisMetropolitanaServiceConfig?) {
+        self.urlSession = config?.urlSession ?? CarrisMetropolitanaService.defaultUrlSession()
+        self.jsonDecoder = config?.jsonDecoder ?? JSONDecoder()
     }
 
     /// Fetches data from the specified URL and decodes it into the specified type.
@@ -33,7 +46,14 @@ public class CarrisMetropolitanaService : CarrisMetropolitanaServiceProtocol {
     /// - Returns: The decoded object of the specified type.
     private func fetchData<T: Decodable>(from url: URL) async throws -> T {
         let (data, _) = try await urlSession.data(from: url)
-        return try JSONDecoder().decode(T.self, from: data)
+        return try jsonDecoder.decode(T.self, from: data)
+    }
+
+
+    private static func defaultUrlSession() -> URLSession {
+        let configuration = URLSessionConfiguration.default
+        configuration.urlCache = URLCache(memoryCapacity: 20 * 1024 * 1024, diskCapacity: 100 * 1024 * 1024, diskPath: "SchedulesAPI")
+        return URLSession(configuration: configuration)
     }
 }
 
